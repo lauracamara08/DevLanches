@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="DevLanches: compile seu lanche e execute sua fome. Lanches artesanais, bebidas e petiscos com pedido pelo WhatsApp.">
+    <title>DevLanches | Compile seu lanche</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js" defer></script>
+</head>
+
+<body>
+    <a class="link-pular-conteudo" href="#inicio">Pular para o conteúdo</a>
+
+    <!-- Cabeçalho e navegação -->
+    <header class="cabecalho-site" id="topo">
+        <div class="conteudo conteudo-cabecalho">
+            <a class="marca-site" href="#inicio" aria-label="DevLanches, início">
+                <span class="simbolo-marca">&lt;/&gt;</span>
+                <span>Dev<span>Lanches</span></span>
+            </a>
+
+            <button class="botao-menu" type="button" aria-label="Abrir menu" aria-expanded="false"
+                aria-controls="navegacao-principal">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="navegacao-principal" id="navegacao-principal" aria-label="Navegação principal">
+                <a class="link-navegacao ativo" href="#inicio">Início</a>
+
+                <div class="menu-dropdown">
+                    <a class="link-navegacao" href="#cardapio" aria-haspopup="true">
+                        Cardápio <span class="seta-menu" aria-hidden="true">▾</span>
+                    </a>
+
+                    <div class="submenu-navegacao" aria-label="Categorias do cardápio">
+                        <a class="link-submenu" href="#categoria-lanches" data-category="lanches">Lanches</a>
+                        <a class="link-submenu" href="#categoria-bebidas" data-category="bebidas">Bebidas</a>
+                        <a class="link-submenu" href="#categoria-petiscos" data-category="petiscos">Petiscos</a>
+                    </div>
+                </div>
+
+                <a class="link-navegacao" href="#depoimentos">Depoimentos</a>
+                <a class="link-navegacao" href="#sobre">Sobre nós</a>
+                <a class="link-navegacao" href="#contato">Contato</a>
+            </nav>
+
+            <div class="acoes-cabecalho">
+                <button class="botao-carrinho" type="button" data-open-cart aria-label="Abrir carrinho">
+                    <span aria-hidden="true">🛒</span>
+                    <span class="rotulo-carrinho">Carrinho</span>
+                    <span class="contador-carrinho">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+        <!-- Apresentação -->
+        <section class="secao-inicio secao" id="inicio">
+            <div class="conteudo grade-inicio">
+                <div class="texto-inicio animar-entrada">
+                    <p class="rotulo-secao">// status: fome_detectada()</p>
+                    <h1>Dev<span>Lanches</span></h1>
+                    <p class="titulo-inicio">
+                        Compile seu lanche.<br>
+                        <strong>Execute sua fome.</strong>
+                    </p>
+                    <p class="descricao-inicio">
+                        Uma lanchonete feita por estudantes de tecnologia para quem sabe que o melhor código
+                        é aquele que vem acompanhado de batata crocante.
+                    </p>
+
+                    <div class="acoes-inicio">
+                        <a class="botao botao-principal" href="#cardapio">
+                            Rodar pedido <span aria-hidden="true">▶</span>
+                        </a>
+                        <a class="link-texto" href="#sobre">
+                            Conheça nosso código <span aria-hidden="true">→</span>
+                        </a>
+                    </div>
+
+                    <div class="linha-terminal">
+                        <span class="ponto-terminal"></span>
+                        <span>frete fixo: <strong>R$ 5,00</strong></span>
+                    </div>
+                </div>
+
+                <div class="visual-inicio animar-entrada">
+                    <div class="brilho-inicio"></div>
+                    <img class="imagem-inicio" src="img/burger-glitchado.png"
+                        alt="Hambúrguer artesanal com efeito visual pixelado em vermelho e roxo">
+                    <span class="etiqueta-codigo etiqueta-codigo-principal">&lt;burger /&gt;</span>
+                    <span class="etiqueta-codigo etiqueta-codigo-secundaria">404: fome não encontrada</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Promoção -->
+        <section class="faixa-promocao" aria-label="Promoção do dia">
+            <div class="conteudo conteudo-promocao">
+                <span class="icone-promocao" aria-hidden="true">✦</span>
+                <p>
+                    <strong>COMBO DO DIA:</strong>
+                    monte seu pedido e receba aquela energia extra para debugar a noite.
+                </p>
+                <span class="codigo-promocao">// yummy_mode: ON</span>
+            </div>
+        </section>
+
+        <!-- Cardápio -->
+        <section class="secao-cardapio secao" id="cardapio">
+            <div class="conteudo">
+                <div class="cabecalho-secao">
+                    <div>
+                        <p class="rotulo-secao">// menu.pronto()</p>
+                        <h2>Escolha seu <span>commit</span> favorito</h2>
+                    </div>
+                    <p class="introducao-secao">
+                        Selecione uma categoria, adicione seus favoritos e deixe o resto com nosso algoritmo de sabor.
+                    </p>
+                </div>
+
+                <div class="abas-categorias" role="tablist" aria-label="Categorias do cardápio">
+                    <button class="aba-categoria ativo" id="categoria-lanches" data-category="lanches"
+                        role="tab" aria-selected="true">
+                        Lanches <span>06</span>
+                    </button>
+                    <button class="aba-categoria" id="categoria-bebidas" data-category="bebidas"
+                        role="tab" aria-selected="false">
+                        Bebidas <span>06</span>
+                    </button>
+                    <button class="aba-categoria" id="categoria-petiscos" data-category="petiscos"
+                        role="tab" aria-selected="false">
+                        Petiscos <span>06</span>
+                    </button>
+                </div>
+
+                <div class="grade-produtos" id="grade-produtos" aria-live="polite"></div>
+            </div>
+        </section>
+
+        <!-- Depoimentos -->
+        <section class="secao-depoimentos secao" id="depoimentos">
+            <div class="conteudo">
+                <div class="cabecalho-secao conteudo-centralizado">
+                    <div>
+                        <p class="rotulo-secao">// avaliações.run()</p>
+                        <h2>Quem provou, <span>comitou</span></h2>
+                    </div>
+                </div>
+
+                <div class="grade-depoimentos">
+                    <article class="card-depoimento">
+                        <div class="pessoa-depoimento">
+                            <img src="img/avatar-image.png"
+                                data-fallback="img/avatar-dev.svg"
+                                alt="Foto de perfil de Lucas Mendes">
+                            <div>
+                                <strong>Lucas Mendes</strong>
+                                <small>estudante de ADS</small>
+                            </div>
+                        </div>
+                        <p>“O atendimento demorou um pouco, mas o lanche chegou gostoso.”</p>
+                        <div class="avaliacao-depoimento" aria-label="Avaliação: 1 de 4 barras, ruim">
+                            <span class="icone-avaliacao"><i class="preenchido"></i><i></i><i></i><i></i></span>
+                            <b>Ruim</b>
+                        </div>
+                    </article>
+
+                    <article class="card-depoimento">
+                        <div class="pessoa-depoimento">
+                            <img src="img/avatar-image.png"
+                                data-fallback="img/avatar-dev.svg"
+                                alt="Foto de perfil de Beatriz Santos">
+                            <div>
+                                <strong>Beatriz Santos</strong>
+                                <small>dev front-end</small>
+                            </div>
+                        </div>
+                        <p>“Gostei das batatas e do preço. Pode melhorar o tempo de entrega.”</p>
+                        <div class="avaliacao-depoimento" aria-label="Avaliação: 2 de 4 barras, bom">
+                            <span class="icone-avaliacao"><i class="preenchido"></i><i class="preenchido"></i><i></i><i></i></span>
+                            <b>Bom</b>
+                        </div>
+                    </article>
+
+                    <article class="card-depoimento">
+                        <div class="pessoa-depoimento">
+                            <img src="img/avatar-image.png"
+                                data-fallback="img/avatar-dev.svg"
+                                alt="Foto de perfil de Rafael Costa">
+                            <div>
+                                <strong>Rafael Costa</strong>
+                                <small>estudante de informática</small>
+                            </div>
+                        </div>
+                        <p>“O Burger.exe é bem servido e o sabor é bom. Voltarei a pedir.”</p>
+                        <div class="avaliacao-depoimento" aria-label="Avaliação: 3 de 4 barras, bom">
+                            <span class="icone-avaliacao"><i class="preenchido"></i><i class="preenchido"></i><i class="preenchido"></i><i></i></span>
+                            <b>Bom</b>
+                        </div>
+                    </article>
+
+                    <article class="card-depoimento">
+                        <div class="pessoa-depoimento">
+                            <img src="img/avatar-image.png"
+                                data-fallback="img/avatar-dev.svg"
+                                alt="Foto de perfil de Camila Alves">
+                            <div>
+                                <strong>Camila Alves</strong>
+                                <small>analista de dados</small>
+                            </div>
+                        </div>
+                        <p>“O molho cheddar é o verdadeiro easter egg do cardápio. Perfeito!”</p>
+                        <div class="avaliacao-depoimento" aria-label="Avaliação: 4 de 4 barras, maravilhoso">
+                            <span class="icone-avaliacao"><i class="preenchido"></i><i class="preenchido"></i><i class="preenchido"></i><i class="preenchido"></i></span>
+                            <b>Maravilhoso</b>
+                        </div>
+                    </article>
+
+                    <article class="card-depoimento">
+                        <div class="pessoa-depoimento">
+                            <img src="img/avatar-image.png"
+                                data-fallback="img/avatar-dev.svg"
+                                alt="Foto de perfil de João Pedro">
+                            <div>
+                                <strong>João Pedro</strong>
+                                <small>backend curioso</small>
+                            </div>
+                        </div>
+                        <p>“Atendimento nota dez e porção generosa. O Null Pointer virou meu favorito.”</p>
+                        <div class="avaliacao-depoimento" aria-label="Avaliação: 4 de 4 barras, maravilhoso">
+                            <span class="icone-avaliacao"><i class="preenchido"></i><i class="preenchido"></i><i class="preenchido"></i><i class="preenchido"></i></span>
+                            <b>Maravilhoso</b>
+                        </div>
+                    </article>
+
+                    <article class="card-depoimento">
+                        <div class="pessoa-depoimento">
+                            <img src="img/avatar-image.png"
+                                data-fallback="img/avatar-dev.svg"
+                                alt="Foto de perfil de Ana Clara">
+                            <div>
+                                <strong>Ana Clara</strong>
+                                <small>designer de produto</small>
+                            </div>
+                        </div>
+                        <p>“Finalmente um cardápio que fala a minha língua. E a comida fala ainda melhor.”</p>
+                        <div class="avaliacao-depoimento" aria-label="Avaliação: 4 de 4 barras, maravilhoso">
+                            <span class="icone-avaliacao"><i class="preenchido"></i><i class="preenchido"></i><i class="preenchido"></i><i class="preenchido"></i></span>
+                            <b>Maravilhoso</b>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sobre -->
+        <section class="secao-sobre secao" id="sobre">
+            <div class="conteudo grade-sobre">
+                <div class="terminal-sobre">
+                    <span>devlanches@terminal:~$ cat sobre-nos.txt</span>
+                    <div class="janela-terminal">
+                        <span class="prompt-terminal">&gt;</span>
+                        <span>ideia compartilhada</span>
+                        <span class="prompt-terminal">&gt;</span>
+                        <span>sabor executado</span>
+                        <span class="prompt-terminal">&gt;</span>
+                        <span>experiência entregue</span>
+                    </div>
+                </div>
+
+                <div class="texto-sobre">
+                    <p class="rotulo-secao">// sobre_nos.txt</p>
+                    <h2>Tem código, tem <span>carinho</span></h2>
+                    <p>
+                        A DevLanches nasceu em 18 de setembro de 2026, a partir de uma ideia compartilhada entre nós,
+                        Laura Câmara, Maria Heloiza e Maria Luiza. Como estudantes da área de Informática, decidimos
+                        unir nossa criatividade e nossos conhecimentos sobre tecnologia para imaginar uma forma
+                        diferente de tornar a experiência de pedir lanches mais prática e agradável.
+                    </p>
+                    <p>
+                        Inspiradas pelo pensamento computacional, percebemos que até mesmo uma ideia simples pode se
+                        transformar em algo inovador quando colocamos nossas ideias em conjunto. Foi assim que surgiu
+                        a DevLanches: uma lanchonete que une tecnologia, modernidade e sabor em uma só experiência.
+                    </p>
+                    <p>
+                        Nosso objetivo é oferecer um ambiente digital intuitivo, um cardápio diversificado e uma
+                        maneira mais simples de escolher seus lanches favoritos. Queremos mostrar que a tecnologia pode
+                        fazer parte do cotidiano de forma criativa, aproximando nossos clientes daquilo que eles mais
+                        gostam.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contato -->
+        <section class="secao-contato secao" id="contato">
+            <div class="conteudo">
+                <div class="cabecalho-secao">
+                    <div>
+                        <p class="rotulo-secao">// ping devlanches</p>
+                        <h2>Fale com a <span>equipe</span></h2>
+                    </div>
+                    <p class="introducao-secao">
+                        Tem dúvida, sugestão ou só quer dizer que o lanche estava incrível? Estamos online.
+                    </p>
+                </div>
+
+                <div class="grade-contato">
+                    <a class="item-contato" href="https://wa.me/5584987733297" target="_blank" rel="noreferrer">
+                        <img class="icone-contato" src="img/whatsapp.svg" alt="">
+                        <span>
+                            <small>Telefone / WhatsApp</small>
+                            <strong>84 98773-3297</strong>
+                        </span>
+                    </a>
+                    <a class="item-contato" href="mailto:divasdodevlanches@gmail.com">
+                        <img class="icone-contato" src="img/email.svg" alt="">
+                        <span>
+                            <small>E-mail</small>
+                            <strong>divasdodevlanches@gmail.com</strong>
+                        </span>
+                    </a>
+                    <div class="item-contato">
+                        <img class="icone-contato" src="img/local.svg" alt="">
+                        <span>
+                            <small>Endereço</small>
+                            <strong>Av Venâncio Neiva, 71</strong>
+                        </span>
+                    </div>
+                    <div class="item-contato">
+                        <img class="icone-contato" src="img/horario.svg" alt="">
+                        <span>
+                            <small>Funcionamento</small>
+                            <strong>17h às 22h</strong>
+                        </span>
+                    </div>
+                    <a class="item-contato" href="https://instagram.com/divasdevlanches" target="_blank"
+                        rel="noreferrer">
+                        <img class="icone-contato" src="img/instagram.svg" alt="">
+                        <span>
+                            <small>Instagram</small>
+                            <strong>@divasdevlanches</strong>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chamada final -->
+        <section class="chamada-final">
+            <div class="conteudo conteudo-chamada-final">
+                <div>
+                    <p class="rotulo-secao">// while (fome) { pedir(); }</p>
+                    <h2>Bateu a fome?</h2>
+                    <p>Faça seu pedido e deixe a gente cuidar do resto do processamento.</p>
+                </div>
+                <a class="botao botao-principal" href="#cardapio">
+                    Abrir cardápio <span aria-hidden="true">→</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="rodape-site">
+        <div class="conteudo grade-rodape">
+            <div>
+                <a class="marca-site" href="#inicio">
+                    <span class="simbolo-marca">&lt;/&gt;</span>
+                    <span>Dev<span>Lanches</span></span>
+                </a>
+                <p>Desenvolvido por Laura Câmara,<br>Maria Heloiza e Maria Luiza.</p>
+            </div>
+
+            <div>
+                <h3>Navegue</h3>
+                <a href="#inicio">Início</a>
+                <a href="#cardapio">Cardápio</a>
+                <a href="#sobre">Sobre nós</a>
+                <a href="#contato">Contato</a>
+            </div>
+
+            <div>
+                <h3>Conecte</h3>
+                <a href="https://wa.me/5584987733297" target="_blank" rel="noreferrer">WhatsApp</a>
+                <a href="https://instagram.com/divasdevlanches" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="mailto:divasdodevlanches@gmail.com">E-mail</a>
+            </div>
+        </div>
+
+        <div class="conteudo rodape-final">
+            <span>© 2026 DevLanches</span>
+            <span>feito com amor e muito cheddar</span>
+        </div>
+    </footer>
+
+    <!-- Atalho para contato -->
+    <a class="botao-whatsapp" href="https://wa.me/5584987733297" target="_blank" rel="noreferrer"
+        aria-label="Falar com a DevLanches pelo WhatsApp">
+        <img src="img/whatsapp.svg" alt="">
+    </a>
+
+    <!-- Feedback do carrinho -->
+    <aside class="feedback-carrinho" id="feedback-carrinho" aria-live="polite">
+        <div>
+            <strong>Item adicionado</strong>
+            <span><b id="quantidade-feedback">0</b> item(ns) no carrinho</span>
+        </div>
+        <span class="subtotal-feedback" id="subtotal-feedback">R$ 0,00</span>
+        <button class="botao botao-principal" type="button" data-open-cart>Ir para o carrinho</button>
+    </aside>
+
+    <!-- Modal do carrinho -->
+    <div class="fundo-modal" id="modal-carrinho" aria-hidden="true">
+        <section class="modal-carrinho" role="dialog" aria-modal="true" aria-labelledby="titulo-carrinho">
+            <div class="cabecalho-modal">
+                <div>
+                    <p class="rotulo-secao">// carrinho.json</p>
+                    <h2 id="titulo-carrinho">Seu pedido</h2>
+                </div>
+                <button class="botao-fechar-modal" type="button" data-close-cart aria-label="Fechar carrinho">×</button>
+            </div>
+
+            <div class="itens-carrinho" id="itens-carrinho"></div>
+
+            <div class="resumo-carrinho">
+                <div>
+                    <span>Subtotal</span>
+                    <strong id="subtotal-carrinho">R$ 0,00</strong>
+                </div>
+                <div>
+                    <span>Frete fixo</span>
+                    <strong>R$ 5,00</strong>
+                </div>
+                <div class="total-carrinho">
+                    <span>Total</span>
+                    <strong id="total-carrinho">R$ 5,00</strong>
+                </div>
+            </div>
+
+            <button class="botao botao-principal botao-finalizar" id="botao-finalizar" type="button">
+                Finalizar pedido <span aria-hidden="true">↗</span>
+            </button>
+            <p class="erro-finalizacao" id="erro-finalizacao" role="alert"></p>
+            <p class="observacao-finalizacao">Você será redirecionado para o WhatsApp.</p>
+        </section>
+    </div>
+</body>
+
+</html>
