@@ -799,12 +799,19 @@ h2 {
   gap: 8px;
   margin-top: 8px;
 }
-.controles-quantidade botao {
+.controles-quantidade button:not(.botao-remover-item) {
   width: 25px;
   height: 25px;
   padding: 0;
+  color: var(--text);
   border: 1px solid var(--line);
   background: var(--surface-2);
+  line-height: 1;
+}
+.controles-quantidade button:not(.botao-remover-item):hover {
+  color: var(--green-bright);
+  border-color: var(--green-bright);
+  background: var(--purple);
 }
 .botao-remover-item {
   margin-left: 10px;
