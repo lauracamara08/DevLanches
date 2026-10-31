@@ -180,19 +180,61 @@ function atualizarExibicaoDoCarrinho() {
   const listaCarrinho = document.querySelector('#itens-carrinho');
   const quantidadeTotal = itensCarrinho.reduce((total, item) => total + item.quantidade, 0);
   const subtotal = itensCarrinho.reduce((total, item) => total + calcularTotalDoItem(item), 0);
+  const frete = obterFreteSelecionado();
 
   document.querySelector('.contador-carrinho').textContent = quantidadeTotal;
   listaCarrinho.innerHTML = itensCarrinho.length
     ? itensCarrinho.map(criarItemDoCarrinho).join('')
     : '<p class="carrinho-vazio">Seu carrinho está vazio.<br>Que tal compilar um lanche?</p>';
   document.querySelector('#subtotal-carrinho').textContent = formatarMoeda(subtotal);
-  document.querySelector('#total-carrinho').textContent = formatarMoeda(subtotal + VALOR_FRETE);
+  document.querySelector('#frete-carrinho').textContent = formatarMoeda(frete);
+  document.querySelector('#total-carrinho').textContent = formatarMoeda(subtotal + frete);
   document.querySelector('#botao-finalizar').disabled = false;
 
   document.querySelector('#quantidade-feedback').textContent = quantidadeTotal;
   document.querySelector('#subtotal-feedback').textContent = formatarMoeda(subtotal);
   barraDeFeedback.classList.toggle('is-visible', itensCarrinho.length > 0);
   document.body.classList.toggle('carrinho-com-itens', itensCarrinho.length > 0);
+}
+
+function obterModalidadeSelecionada() {
+  return document.querySelector('input[name="modalidade-pedido"]:checked')?.value || 'retirada';
+}
+
+function obterFreteSelecionado() {
+  return obterModalidadeSelecionada() === 'delivery' ? VALOR_FRETE : 0;
+}
+
+function obterFormaDePagamento() {
+  const pagamento = document.querySelector('input[name="forma-pagamento"]:checked')?.value;
+  const formasDePagamento = {
+    pix: 'Pix',
+    cartao: 'Cartão',
+    dinheiro: 'Dinheiro'
+  };
+  return formasDePagamento[pagamento] || formasDePagamento.pix;
+}
+
+function atualizarCamposDeEndereco() {
+  const deliverySelecionado = obterModalidadeSelecionada() === 'delivery';
+  const secaoEndereco = document.querySelector('#endereco-delivery');
+
+  secaoEndereco.hidden = !deliverySelecionado;
+  secaoEndereco.querySelectorAll('input[required]').forEach(campo => {
+    campo.disabled = !deliverySelecionado;
+  });
+}
+
+function obterEnderecoDoPedido() {
+  const secaoEndereco = document.querySelector('#endereco-delivery');
+  return {
+    rua: secaoEndereco.querySelector('[name="rua"]').value.trim(),
+    numero: secaoEndereco.querySelector('[name="numero"]').value.trim(),
+    bairro: secaoEndereco.querySelector('[name="bairro"]').value.trim(),
+    cidade: secaoEndereco.querySelector('[name="cidade"]').value.trim(),
+    complemento: secaoEndereco.querySelector('[name="complemento"]').value.trim(),
+    referencia: secaoEndereco.querySelector('[name="referencia"]').value.trim()
+  };
 }
 
 function abrirModalDoCarrinho() {
@@ -227,18 +269,77 @@ function removerItemDoCarrinho(idDoItem) {
 }
 
 function criarMensagemDoPedido() {
-  const partesDaMensagem = CATEGORIAS.map(categoria => {
-    const itensDaCategoria = itensCarrinho.filter(item => item.categoria === categoria);
-    return itensDaCategoria.map(item => {
-      const opcoesAdicionaisDoItem = item.adicionais.length
-        ? `\n   Adicionais: ${item.adicionais.map(adicional => adicional.nome).join(', ')}`
-        : '';
-      return `${item.quantidade}x ${item.nome}${opcoesAdicionaisDoItem}`;
-    }).join('\n');
-  }).filter(Boolean);
-
   const subtotal = itensCarrinho.reduce((total, item) => total + calcularTotalDoItem(item), 0);
-  return `Olá, divas do DevLanches! Meu pedido é:\n\n${partesDaMensagem.join('\n=============================\n')}\n\nSubtotal: ${formatarMoeda(subtotal)}\nFrete: ${formatarMoeda(VALOR_FRETE)}\nTotal: ${formatarMoeda(subtotal + VALOR_FRETE)}`;
+  const modalidade = obterModalidadeSelecionada();
+  const frete = obterFreteSelecionado();
+  const descricaoModalidade = modalidade === 'delivery' ? 'Delivery' : 'Retirada presencial';
+  const endereco = modalidade === 'delivery' ? obterEnderecoDoPedido() : null;
+  const linhasDosProdutos = CATEGORIAS.flatMap(categoria => (
+    itensCarrinho
+      .filter(item => item.categoria === categoria)
+      .map(item => {
+        const adicionais = item.adicionais.length
+          ? `\n   + ${item.adicionais.map(adicional => adicional.nome).join(', ')}`
+          : '';
+        return `- ${item.quantidade}x ${item.nome}\n  Valor: ${formatarMoeda(calcularTotalDoItem(item))}${adicionais}`;
+      })
+  ));
+  const textoEndereco = endereco
+    ? [
+      `Rua: ${endereco.rua}`,
+      `Número: ${endereco.numero}`,
+      `Bairro: ${endereco.bairro}`,
+      `Cidade: ${endereco.cidade}`,
+      endereco.complemento ? `Complemento: ${endereco.complemento}` : '',
+      endereco.referencia ? `Referência: ${endereco.referencia}` : ''
+    ].filter(Boolean).join('\n')
+    : 'Não se aplica (retirada presencial)';
+
+  return [
+    '================================',
+    '        DEVLANCHES',
+    '================================',
+    'Olá, divas!',
+    '',
+    '--------- PRODUTOS -------------',
+    linhasDosProdutos.join('\n===\n'),
+    '',
+    '--------- ENTREGA --------------',
+    `Modalidade: ${descricaoModalidade}`,
+    textoEndereco,
+    '',
+    '--------- PAGAMENTO ------------',
+    `Forma de pagamento: ${obterFormaDePagamento()}`,
+    '',
+    '--------- RESUMO ----------------',
+    `Subtotal: ${formatarMoeda(subtotal)}`,
+    `Frete: ${formatarMoeda(frete)}`,
+    `TOTAL: ${formatarMoeda(subtotal + frete)}`,
+    '================================',
+    '       Obrigada pela compra!',
+    '================================'
+  ].join('\n');
+}
+
+function finalizarPedido() {
+  const mensagemDeErro = document.querySelector('#erro-finalizacao');
+  if (!itensCarrinho.length) {
+    mensagemDeErro.textContent = 'Erro 404: Lanche não encontrado! Adicione pelo menos um item para finalizar o pedido.';
+    return;
+  }
+
+  const formularioEndereco = document.querySelector('#endereco-delivery');
+  if (obterModalidadeSelecionada() === 'delivery' && formularioEndereco.querySelector('input:invalid')) {
+    formularioEndereco.querySelector('input[required]').reportValidity();
+    mensagemDeErro.textContent = 'Preencha todos os campos obrigatórios do endereço para continuar.';
+    return;
+  }
+
+  const mensagem = encodeURIComponent(criarMensagemDoPedido());
+  window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${mensagem}`, '_blank');
+  itensCarrinho = [];
+  salvarItensDoCarrinho();
+  window.location.reload();
 }
 
 // Navegação
@@ -312,19 +413,18 @@ document.addEventListener('click', evento => {
   if (evento.target.closest('[data-close-cart]') || evento.target === modalDoCarrinho) fecharModalDoCarrinho();
 
   if (evento.target.matches('#botao-finalizar')) {
-    const mensagemDeErro = document.querySelector('#erro-finalizacao');
-    if (!itensCarrinho.length) {
-      mensagemDeErro.textContent = 'Erro 404: Lanche não encontrado! Adicione pelo menos um item para finalizar o pedido.';
-      return;
-    }
-    const mensagem = encodeURIComponent(criarMensagemDoPedido());
-    window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${mensagem}`, '_blank');
+    finalizarPedido();
   }
 });
 
 document.addEventListener('change', evento => {
   const adicional = evento.target.closest('.opcao-adicional input');
   if (adicional) atualizarPrecoDoCard(adicional.closest('.card-produto'));
+
+  if (evento.target.matches('input[name="modalidade-pedido"]')) {
+    atualizarCamposDeEndereco();
+    atualizarExibicaoDoCarrinho();
+  }
 });
 
 document.addEventListener('error', evento => {
@@ -346,5 +446,6 @@ window.addEventListener('hashchange', configurarCategoriaPelaUrl);
 // Inicialização da página
 mostrarProdutosDaCategoria();
 atualizarExibicaoDoCarrinho();
+atualizarCamposDeEndereco();
 configurarMenuPrincipal();
 configurarCategoriaPelaUrl();

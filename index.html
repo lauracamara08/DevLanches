@@ -93,7 +93,7 @@
 
                     <div class="linha-terminal">
                         <span class="ponto-terminal"></span>
-                        <span>frete fixo: <strong>R$ 5,00</strong></span>
+                        <span>delivery ou retirada presencial</span>
                     </div>
                 </div>
 
@@ -437,18 +437,76 @@
 
             <div class="itens-carrinho" id="itens-carrinho"></div>
 
+            <fieldset class="modalidade-pedido">
+                <legend>Como você quer receber?</legend>
+                <label>
+                    <input type="radio" name="modalidade-pedido" value="delivery">
+                    Delivery <span>+R$ 5,00</span>
+                </label>
+                <label>
+                    <input type="radio" name="modalidade-pedido" value="retirada" checked>
+                    Retirada presencial <span>sem frete</span>
+                </label>
+            </fieldset>
+
+            <div class="endereco-delivery" id="endereco-delivery" hidden>
+                <p class="rotulo-endereco">Endereço para entrega</p>
+                <div class="campos-endereco">
+                    <label>
+                        Rua
+                        <input type="text" name="rua" autocomplete="street-address" required>
+                    </label>
+                    <label>
+                        Número
+                        <input type="text" name="numero" autocomplete="address-line2" required>
+                    </label>
+                    <label>
+                        Bairro
+                        <input type="text" name="bairro" required>
+                    </label>
+                    <label>
+                        Cidade
+                        <input type="text" name="cidade" autocomplete="address-level2" required>
+                    </label>
+                    <label>
+                        Complemento <span>(opcional)</span>
+                        <input type="text" name="complemento" autocomplete="address-line2">
+                    </label>
+                    <label>
+                        Referência <span>(opcional)</span>
+                        <input type="text" name="referencia">
+                    </label>
+                </div>
+            </div>
+
+            <fieldset class="pagamento-pedido">
+                <legend>Forma de pagamento</legend>
+                <label>
+                    <input type="radio" name="forma-pagamento" value="pix" checked>
+                    Pix
+                </label>
+                <label>
+                    <input type="radio" name="forma-pagamento" value="cartao">
+                    Cartão
+                </label>
+                <label>
+                    <input type="radio" name="forma-pagamento" value="dinheiro">
+                    Dinheiro
+                </label>
+            </fieldset>
+
             <div class="resumo-carrinho">
                 <div>
                     <span>Subtotal</span>
                     <strong id="subtotal-carrinho">R$ 0,00</strong>
                 </div>
                 <div>
-                    <span>Frete fixo</span>
-                    <strong>R$ 5,00</strong>
+                    <span>Frete</span>
+                    <strong id="frete-carrinho">R$ 0,00</strong>
                 </div>
                 <div class="total-carrinho">
                     <span>Total</span>
-                    <strong id="total-carrinho">R$ 5,00</strong>
+                    <strong id="total-carrinho">R$ 0,00</strong>
                 </div>
             </div>
 
