@@ -215,6 +215,10 @@ function obterFormaDePagamento() {
   return formasDePagamento[pagamento] || formasDePagamento.pix;
 }
 
+function obterNomeDoCliente() {
+  return document.querySelector('#nome-cliente').value.trim();
+}
+
 function atualizarCamposDeEndereco() {
   const deliverySelecionado = obterModalidadeSelecionada() === 'delivery';
   const secaoEndereco = document.querySelector('#endereco-delivery');
@@ -288,6 +292,10 @@ function criarMensagemDoPedido() {
     '--------------------------------',
     'Olá, divas!',
     '--------------------------------',
+    'DADOS DO CLIENTE',
+    '--------------------------------',
+    `Nome completo  ${obterNomeDoCliente()}`,
+    '--------------------------------',
     'PRODUTOS',
     '--------------------------------',
     linhasDosProdutos.join('\n'),
@@ -342,6 +350,13 @@ function finalizarPedido() {
   const mensagemDeErro = document.querySelector('#erro-finalizacao');
   if (!itensCarrinho.length) {
     mensagemDeErro.textContent = 'Erro 404: Lanche não encontrado! Adicione pelo menos um item para finalizar o pedido.';
+    return;
+  }
+
+  const campoNomeCliente = document.querySelector('#nome-cliente');
+  if (!campoNomeCliente.checkValidity()) {
+    campoNomeCliente.reportValidity();
+    mensagemDeErro.textContent = 'Informe o nome completo da pessoa responsável pelo recebimento para continuar.';
     return;
   }
 
