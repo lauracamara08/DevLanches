@@ -272,53 +272,70 @@ function criarMensagemDoPedido() {
   const subtotal = itensCarrinho.reduce((total, item) => total + calcularTotalDoItem(item), 0);
   const modalidade = obterModalidadeSelecionada();
   const frete = obterFreteSelecionado();
-  const descricaoModalidade = modalidade === 'delivery' ? 'Delivery' : 'Retirada presencial';
   const endereco = modalidade === 'delivery' ? obterEnderecoDoPedido() : null;
   const linhasDosProdutos = CATEGORIAS.flatMap(categoria => (
     itensCarrinho
       .filter(item => item.categoria === categoria)
       .map(item => {
         const adicionais = item.adicionais.length
-          ? `\n   + ${item.adicionais.map(adicional => adicional.nome).join(', ')}`
+          ? `\n  Adicionais: ${item.adicionais.map(adicional => adicional.nome).join(', ')}`
           : '';
-        return `- ${item.quantidade}x ${item.nome}\n  Valor: ${formatarMoeda(calcularTotalDoItem(item))}${adicionais}`;
+        return `${item.quantidade}x ${item.nome}  ${formatarMoeda(calcularTotalDoItem(item))}${adicionais}`;
       })
   ));
-  const textoEndereco = endereco
-    ? [
-      `Rua: ${endereco.rua}`,
-      `Número: ${endereco.numero}`,
-      `Bairro: ${endereco.bairro}`,
-      `Cidade: ${endereco.cidade}`,
-      endereco.complemento ? `Complemento: ${endereco.complemento}` : '',
-      endereco.referencia ? `Referência: ${endereco.referencia}` : ''
-    ].filter(Boolean).join('\n')
-    : 'Não se aplica (retirada presencial)';
-
-  return [
-    '================================',
-    '        DEVLANCHES',
-    '================================',
+  const mensagem = [
+    '           DEVLANCHES',
+    '--------------------------------',
     'Olá, divas!',
-    '',
-    '--------- PRODUTOS -------------',
-    linhasDosProdutos.join('\n===\n'),
-    '',
-    '--------- ENTREGA --------------',
-    `Modalidade: ${descricaoModalidade}`,
-    textoEndereco,
-    '',
-    '--------- PAGAMENTO ------------',
-    `Forma de pagamento: ${obterFormaDePagamento()}`,
-    '',
-    '--------- RESUMO ----------------',
-    `Subtotal: ${formatarMoeda(subtotal)}`,
-    `Frete: ${formatarMoeda(frete)}`,
-    `TOTAL: ${formatarMoeda(subtotal + frete)}`,
-    '================================',
-    '       Obrigada pela compra!',
-    '================================'
-  ].join('\n');
+    '--------------------------------',
+    'PRODUTOS',
+    '--------------------------------',
+    linhasDosProdutos.join('\n'),
+    '--------------------------------',
+    'RESUMO DOS VALORES',
+    '--------------------------------',
+    `Subtotal  ${formatarMoeda(subtotal)}`
+  ];
+
+  if (modalidade === 'delivery') {
+    mensagem.push(`Frete     ${formatarMoeda(frete)}`);
+  }
+
+  mensagem.push(
+    `TOTAL     ${formatarMoeda(subtotal + frete)}`,
+    '--------------------------------'
+  );
+
+  if (endereco) {
+    mensagem.push(
+      'ENTREGA',
+      '--------------------------------',
+      'Modalidade  Delivery',
+      `Rua         ${endereco.rua}`,
+      `Número      ${endereco.numero}`,
+      `Bairro      ${endereco.bairro}`,
+      `Cidade      ${endereco.cidade}`,
+      ...(endereco.complemento ? [`Complemento ${endereco.complemento}`] : []),
+      ...(endereco.referencia ? [`Referência  ${endereco.referencia}`] : []),
+      '--------------------------------'
+    );
+  } else {
+    mensagem.push(
+      'RETIRADA PRESENCIAL',
+      '--------------------------------'
+    );
+  }
+
+  mensagem.push(
+    'PAGAMENTO',
+    '--------------------------------',
+    `Forma de pagamento  ${obterFormaDePagamento()}`,
+    '--------------------------------',
+    'Obrigada pela compra!',
+    '--------------------------------'
+  );
+
+  return mensagem.join('\n');
 }
 
 function finalizarPedido() {
