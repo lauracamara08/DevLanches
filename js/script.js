@@ -294,7 +294,7 @@ function criarMensagemDoPedido() {
     '--------------------------------',
     'DADOS DO CLIENTE',
     '--------------------------------',
-    `Nome completo  ${obterNomeDoCliente()}`,
+    `Nome completo:  ${obterNomeDoCliente()}`,
     '--------------------------------',
     'PRODUTOS',
     '--------------------------------',
@@ -302,7 +302,7 @@ function criarMensagemDoPedido() {
     '--------------------------------',
     'RESUMO DOS VALORES',
     '--------------------------------',
-    `Subtotal  ${formatarMoeda(subtotal)}`
+    `Subtotal:  ${formatarMoeda(subtotal)}`
   ];
 
   if (modalidade === 'delivery') {
